@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  server:
+    build: ./server
+    container_name: vesela-ferma-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      REDIS_URL: redis://172.17.0.1:6379   # Redis на хост-машині
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      CORS_ORIGIN: ${CORS_ORIGIN:-*}
+    networks:
+      - farm-net
+
+  client:
+    build: ./client
+    container_name: vesela-ferma-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    networks:
+      - farm-net
+
+networks:
+  farm-net:
+    driver: bridge
