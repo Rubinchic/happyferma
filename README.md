@@ -43,8 +43,7 @@ node index.js
 ### Фронтенд
 ```bash
 cd client
-npm install
-cp .env.example .env          # вкажіть VITE_API_URL
+npm install          
 npm run dev                   # http://localhost:5173
 ```
 
