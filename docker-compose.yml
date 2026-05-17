@@ -6,21 +6,24 @@ services:
     container_name: vesela-ferma-api
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3003:3003"
     environment:
-      PORT: 3000
-      REDIS_URL: redis://172.17.0.1:6379   # Redis на хост-машині
+      PORT: 3003
+      REDIS_URL: redis://172.17.0.1:6379
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       CORS_ORIGIN: ${CORS_ORIGIN:-*}
     networks:
       - farm-net
 
   client:
-    build: ./client
+    build:
+      context: ./client
+      args:
+        VITE_API_URL: /api
     container_name: vesela-ferma-web
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8091:80"
     depends_on:
       - server
     networks:

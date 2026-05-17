@@ -1,4 +1,4 @@
-const API_URL = 'https://farm.slivce.cc/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://farm.slivce.cc/api';
 
 export async function apiLogin(username, password) {
   const res = await fetch(`${API_URL}/auth`, {
